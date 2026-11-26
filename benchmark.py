@@ -70,7 +70,8 @@ def measure(mode):
     finally:
         stopped_with_error = sys.exc_info()[0] is not None
         try:
-            compose("down", "--volumes", "--remove-orphans", timeout=30, check=True,
+            compose("down", "--timeout", "2", "--volumes", "--remove-orphans",
+                    timeout=30, check=True,
                     stdout=subprocess.DEVNULL)
         except (OSError, subprocess.SubprocessError) as cleanup_error:
             if not stopped_with_error:

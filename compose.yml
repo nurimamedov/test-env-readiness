@@ -1,5 +1,6 @@
 x-demo: &demo
   image: python:3.12-alpine
+  init: true
   command: [python, -u, /demo/service.py]
   volumes:
     - ./service.py:/demo/service.py:ro
