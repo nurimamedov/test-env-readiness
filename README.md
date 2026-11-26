@@ -40,10 +40,18 @@ interval includes Compose startup and health-check overhead. It excludes
 pulling an image and tearing the project down. Compare repeated samples
 if measuring on a noisy host.
 
+Three GitHub Actions runs on `ubuntu-latest` (26 November 2026, `timings.json` artifacts of
+runs [45893601844](https://github.com/nurimamedov/test-env-readiness/actions/runs/45893601844),
+[45895111107](https://github.com/nurimamedov/test-env-readiness/actions/runs/45895111107) and
+[45895272498](https://github.com/nurimamedov/test-env-readiness/actions/runs/45895272498)):
+
 | Startup mode | Observed seconds |
 |---|---|
-| Cold | Not measured on the authoring host; run the command above or see a successful CI artifact. |
-| Fast | Not measured on the authoring host; run the command above or see a successful CI artifact. |
+| Cold | 12.3, 13.4, 13.5 |
+| Fast | 9.0, 8.9, 9.3 |
+
+The parallel graph reached readiness 3.3–4.6 seconds sooner with the same three
+checks. Shared CI runners are noisy; run the command above to measure on your host.
 
 This intentionally models preparations with small HTTP services rather than
 pulling a database, message broker or a coordination system. The controlled
