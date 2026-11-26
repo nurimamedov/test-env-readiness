@@ -64,3 +64,5 @@ observed measurements.
 ## License
 
 [MIT](LICENSE). Copyright © 2026 Nuri Mamedov. Keep the copyright and license notice when copying or redistributing substantial portions.
+
+See [third-party tools and dependencies](THIRD_PARTY.md) for their separate licenses.
