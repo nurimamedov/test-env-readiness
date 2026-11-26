@@ -1,0 +1,45 @@
+x-demo: &demo
+  image: python:3.12-alpine
+  command: [python, -u, /demo/service.py]
+  volumes:
+    - ./service.py:/demo/service.py:ro
+  healthcheck:
+    test:
+      - CMD
+      - python
+      - -c
+      - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready', timeout=1).close()"
+    interval: 1s
+    timeout: 2s
+    retries: 15
+services:
+  alpha:
+    <<: *demo
+    environment:
+      DEMO_ROLE: alpha
+      DEMO_DELAY: '3'
+  beta:
+    <<: *demo
+    environment:
+      DEMO_ROLE: beta
+      DEMO_DELAY: '4'
+  registry:
+    <<: *demo
+    environment:
+      DEMO_ROLE: registry
+    ports:
+      - "127.0.0.1::8000"
+  app:
+    <<: *demo
+    environment:
+      DEMO_ROLE: app
+      DEMO_DELAY: '2'
+    depends_on:
+      alpha:
+        condition: service_healthy
+      beta:
+        condition: service_healthy
+      registry:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1::8000"

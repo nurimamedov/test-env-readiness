@@ -1,0 +1,21 @@
+name: Readiness experiment
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: PYTHONPATH=. python3 -B -m unittest discover -s tests -v
+      - name: Validate both Compose configurations
+        run: |
+          docker compose -f compose.yml -f compose.cold.yml config --quiet
+          docker compose -f compose.yml -f compose.fast.yml config --quiet
+      - run: docker compose pull
+      - run: python3 benchmark.py > timings.json
+      - run: cat timings.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: readiness-timings
+          path: timings.json

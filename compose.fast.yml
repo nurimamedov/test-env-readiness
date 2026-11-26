@@ -1,0 +1,5 @@
+# Alpha and beta have no ordering constraint.
+services:
+  beta:
+    environment:
+      DEMO_ROLE: beta

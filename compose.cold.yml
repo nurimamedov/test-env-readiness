@@ -1,0 +1,5 @@
+services:
+  beta:
+    depends_on:
+      alpha:
+        condition: service_healthy
