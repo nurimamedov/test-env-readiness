@@ -60,3 +60,7 @@ docker compose -f compose.yml -f compose.fast.yml config --quiet
 The unit tests use loopback fixtures and do not require Docker. The CI
 workflow runs both modes and saves `timings.json` from the runner's
 observed measurements.
+
+## License
+
+[MIT](LICENSE). Copyright © 2026 Nuri Mamedov. Keep the copyright and license notice when copying or redistributing substantial portions.
